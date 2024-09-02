@@ -4,11 +4,11 @@ pipeline {
     stages {
         stage('checkout') {
             steps {
-                echo 'Stage 1'
-                checkout scmGit(branches: [[name: '*/feature/prod']], extensions: [], userRemoteConfigs: [[credentialsId: 'pipeline', url: 'https://github.com/akashkr101/portfolio.git']])
+                echo 'Stage 1--'
+                checkout scmGit(branches: [[name: '*/dev']], extensions: [], userRemoteConfigs: [[credentialsId: 'pipeline', url: 'https://github.com/akashkr101/portfolio.git']])
             }
         }
-        stage('check') {
+        stage('directory info') {
             steps {
                 echo 'Stage 2'
                 sh 'ls'
@@ -21,35 +21,10 @@ pipeline {
                 sh 'npm install'
             }
         }
-        stage('serve') {
-            steps {
-                echo 'Stage 4'
-                /*sh 'ng build --configuration production'*/
-                /* sh 'echo 'your_password' | sudo -S pm2 serve ' ' 4200' */
-                /* sh 'pm2 serve " " 4200' */
-                /*sh 'ng serve --port 4200 &'*/
-            }
-        }
-        /*
-        stage('Monitor') {
-            steps {
-                sh 'cd /var/lib/jenkins/workspace/pipeline'
-                sh 'pm2 serve " " 4200'
-                sh 'pm2 list'
-                sh 'pm2 monit'
-                sh 'pm2 monitor'
-                sh 'echo "monitoring" '
-            }
-        }*/
         stage('Clean Up') {
             steps {
                 script {
-                    echo 'Stage 5'
-                    // Stop and remove container
-                    /*sh 'docker rm -f $(docker ps -aq)'
-                    sh 'docker rmi -f $(docker images -aq)'
-                    sh 'docker ps -a'
-                    sh 'docker images'*/
+                    echo 'Stage 4'
                     // This will run a shell script in the Jenkins pipeline
                     sh '''
                         # Get a list of all running containers
@@ -83,8 +58,8 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    echo 'Stage 6'
-                    sh 'docker build -t portfolio .'
+                    echo 'Stage 5'
+                    sh 'docker build -t portfolio-v2 .'
                     sh 'docker images'
                 }
             }
@@ -92,23 +67,34 @@ pipeline {
         stage ('Push to Docker Hub') {
             steps {
                 script {
-                echo 'stage 8'
-                    /*echo 'stage 7'
-                    sh 'docker tag portfolio akash63/portfolio-v2:latest'
-                    sh 'docker push akash63/portfolio-v2:latest'*/
+                    echo 'stage 6'
+                    // sh 'docker tag portfolio-v2:latest akash63/portfolio-v2:4_sept'
+                    // sh 'docker login'
+                    // sh 'docker push akash63/portfolio-v2:4_sept'
                 }
             }
         }
         stage('Run Docker Container') {
             steps {
                 script {
-                    echo 'Stage 8'
+                    echo 'Stage 7'
                     // Run a container from the built image
-                    sh 'docker run -d -p 7000:80  portfolio'
+                    sh 'docker run -d -p 7000:80  portfolio-v2'
                     sh 'docker ps -a'
                 }
             }
         }
+        
+      /*stage('kubernetes') {
+            steps {
+                script {
+                    echo 'stage 9'
+                    sh 'kubectl get pods'
+                    sh 'kubectl get svc'
+                    sh 'kubectl get deploy'
+                }
+            }
+        }*/
     }
 
     /*post {
@@ -127,4 +113,12 @@ pipeline {
             }
         }
     }*/
+    post {
+        success {
+            echo "Pipeline success"
+        }
+        failure {
+            echo "Pipeline failed"
+        }
+    }
 }
