@@ -84,7 +84,7 @@ pipeline {
             steps {
                 script {
                     echo 'Stage 6'
-                    sh 'docker build -t portfolio .'
+                    sh 'docker build -t portfolio-dev .'
                     sh 'docker images'
                 }
             }
@@ -104,7 +104,7 @@ pipeline {
                 script {
                     echo 'Stage 8'
                     // Run a container from the built image
-                    sh 'docker run -d -p 7000:80  portfolio'
+                    sh 'docker run -d -p 7000:80  portfolio-dev'
                     sh 'docker ps -a'
                 }
             }
