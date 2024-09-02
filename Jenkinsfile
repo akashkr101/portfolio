@@ -4,8 +4,8 @@ pipeline {
     stages {
         stage('checkout') {
             steps {
-                echo 'Stage 1--'
-                checkout scmGit(branches: [[name: '*/dev']], extensions: [], userRemoteConfigs: [[credentialsId: 'pipeline', url: 'https://github.com/akashkr101/portfolio.git']])
+                echo 'Stage 1'
+                checkout scmGit(branches: [[name: '*/feature/prod']], extensions: [], userRemoteConfigs: [[credentialsId: 'pipeline', url: 'https://github.com/akashkr101/portfolio.git']])
             }
         }
         stage('check') {
@@ -98,7 +98,7 @@ pipeline {
                     sh 'docker push akash63/portfolio-v2:latest'*/
                 }
             }
-        }        
+        }
         stage('Run Docker Container') {
             steps {
                 script {
@@ -108,7 +108,18 @@ pipeline {
                     sh 'docker ps -a'
                 }
             }
-        }    
+        }
+      stage('kubernetes') {
+            steps {
+                script {
+                    echo 'stage 9'
+                    sh 'kubectl get pods'
+                    sh 'kubectl get svc'
+                    sh 'kubectl get deploy'
+                }
+            }
+        }
+    }
 
     /*post {
         always {
