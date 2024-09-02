@@ -1,0 +1,67 @@
+<body class="profile">
+    <div class="profile-section">        
+        <div class="profile" id="profile">
+            <a href="#"><img class="mypic" src="../../assets/images/profile.jpg"  alt="Profile Picture"></a>
+        </div>
+        <div class="career-objective-text">
+            <u><h2> My Careers Objectives</h2></u>
+            <p>
+                I am a dedicated and driven professional with a passion for software development and a strong background in
+                web technologies. My objective is to secure a challenging position in a reputable organization where I can
+                utilize my skills and grow both personally and professionally.........
+            </p>
+        </div>
+
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Download My Resume</title>
+            <script src="https://apis.google.com/js/api.js"></script>
+        </head>
+        
+        <body>
+            <button id="download-button">Download My Resume</button>
+        
+            <script>
+                // Load the Google API Client Library
+                function loadClient() {
+                    gapi.load('client:auth2', initClient);
+                }
+        
+                // Initialize the Google API Client Library
+                function initClient() {
+                    gapi.client.init({
+                        'apiKey': 'YOUR_API_KEY',  // Replace with your API key
+                        'clientId': 'YOUR_CLIENT_ID',  // Replace with your client ID
+                        'scope': 'https://www.googleapis.com/auth/drive.readonly',
+                        'discoveryDocs': ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest']
+                    }).then(function () {
+                        gapi.auth2.getAuthInstance().signIn();
+                    });
+                }
+        
+                // Function to download the resume
+                function downloadResume() {
+                    const fileId = 'YOUR_FILE_ID';  // Replace with the file ID of your resume
+                    gapi.client.drive.files.get({
+                        fileId: fileId,
+                        alt: 'media'
+                    }).then(function(response) {
+                        const link = document.createElement('a');
+                        link.href = URL.createObjectURL(new Blob([response.body]));
+                        link.download = 'resume.pdf';  // Change the file name if necessary
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                    });
+                }
+        
+                // Event listener for the download button
+                document.getElementById('download-button').addEventListener('click', downloadResume);
+        
+                // Load the client library
+                loadClient();
+            </script>
+        </body>
+    </div>
+</body>

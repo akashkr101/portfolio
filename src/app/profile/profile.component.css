@@ -1,0 +1,73 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/*--mypic--*/
+.profile-picture
+{
+  margin: 40px 0px 20px 40px;
+  width: 300px;
+  height: 300px;
+  border-width: 10%;
+  border-radius: 50%;
+  border-color: black;
+}
+
+.profile-picture img {
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+}
+
+.profile-section {
+    display: inline-grid;
+    grid-template-columns: auto 1fr;
+    gap: 20px;
+    align-items: center;
+    background-color: #fff;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    width: 100%;
+    max-width: 90%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+/*--mypic--*/
+.mypic
+{
+  margin: 40px 0px 20px 40px;
+  width: 300px;
+  height: 300px;
+  border-width: 10%;
+  border-radius: 50%;
+  border-color: black;
+}
+.profile{
+  padding-left: 0;
+}
+
+
+.career-objective-text {
+    text-align: left;
+    padding-left: 30px;
+}
+
+.career-objective-text h2 {
+    margin-top: 0;
+    color: #333;
+}
+
+h2 {
+    color: #333;
+}

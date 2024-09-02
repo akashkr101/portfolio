@@ -1,0 +1,6 @@
+#home {
+    background-image:linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url("../../assets/images/stars.jpg");
+    height: 90vh;
+    background-size: cover;
+    background-position: center;
+}
