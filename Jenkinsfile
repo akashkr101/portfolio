@@ -41,7 +41,7 @@ pipeline {
                 sh 'echo "monitoring" '
             }
         }*/
-        stage('Clean Up') {
+        /*stage('Clean Up') {
             steps {
                 script {
                     echo 'Stage 5'
@@ -49,7 +49,7 @@ pipeline {
                     /*sh 'docker rm -f $(docker ps -aq)'
                     sh 'docker rmi -f $(docker images -aq)'
                     sh 'docker ps -a'
-                    sh 'docker images'*/
+                    sh 'docker images'
                     // This will run a shell script in the Jenkins pipeline
                     sh '''
                         # Get a list of all running containers
@@ -77,6 +77,29 @@ pipeline {
                             docker rmi -f $images
                         fi
                     '''
+                }
+            }
+        }*/
+      stage('docker') {
+            steps {
+                script {
+                    // Find running containers with the name 'portfolio'
+                    def containerId = sh(script: "docker ps --filter 'name=portfolio' --format '{{.ID}}'", returnStdout: true).trim()
+
+                    if (containerId) {
+                        def containerCount = sh(script: "docker ps --filter 'name=portfolio' --format '{{.ID}}' | wc -l", returnStdout: true).trim()
+
+                        if (containerCount == '1') {
+                            echo "Found exactly one running container named 'portfolio'. Deleting it..."
+                            sh "docker stop ${containerId}"
+                            sh "docker rm ${containerId}"
+                        } else {
+                            echo "Found ${containerCount} running containers named 'portfolio'. Skipping deletion."
+                        }
+                    } 
+                    else {
+                            echo "No running container found with the name 'portfolio'."
+                        }
                 }
             }
         }
@@ -109,6 +132,7 @@ pipeline {
                 }
             }
         }
+        
       /*stage('kubernetes') {
             steps {
                 script {
