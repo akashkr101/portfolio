@@ -138,4 +138,18 @@ pipeline {
             }
         }
     }*/
+  post {
+        always {
+            echo "Build is completed"
+        }
+        success {
+            echo "Pipeline success"
+        }
+        failure {
+            echo "Pipeline failed"
+        }
+        cleanup {
+            echo "Build cleaned"
+        }
+    }
 }
