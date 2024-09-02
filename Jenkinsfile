@@ -98,7 +98,7 @@ pipeline {
                     sh 'docker push akash63/portfolio-v2:latest'*/
                 }
             }
-        }
+        }        
         stage('Run Docker Container') {
             steps {
                 script {
@@ -108,17 +108,7 @@ pipeline {
                     sh 'docker ps -a'
                 }
             }
-        }
-      stage("kubernetes" {
-        steps {
-          script {
-            echo 'stage 9'
-            sh 'kubectl get pods'
-            sh 'kubectl get svc'
-            sh 'kubectl get deploy'
-          }
-        }
-    }
+        }    
 
     /*post {
         always {
