@@ -59,7 +59,7 @@ pipeline {
             steps {
                 script {
                     echo 'Stage 5'
-                    sh 'docker build -t portfolio-dev .'
+                    sh 'docker build -t portfolio-v2 .'
                     sh 'docker images'
                 }
             }
@@ -78,7 +78,7 @@ pipeline {
                 script {
                     echo 'Stage 7'
                     // Run a container from the built image
-                    sh 'docker run -d -p 7000:80  portfolio-dev'
+                    sh 'docker run -d -p 7000:80  portfolio-v2'
                     sh 'docker ps -a'
                 }
             }
