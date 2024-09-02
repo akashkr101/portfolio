@@ -109,7 +109,7 @@ pipeline {
                 }
             }
         }
-      stage('kubernetes') {
+      /*stage('kubernetes') {
             steps {
                 script {
                     echo 'stage 9'
@@ -118,7 +118,7 @@ pipeline {
                     sh 'kubectl get deploy'
                 }
             }
-        }
+        }*/
     }
 
     /*post {
