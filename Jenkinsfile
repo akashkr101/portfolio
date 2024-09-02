@@ -69,7 +69,7 @@ pipeline {
                 script {
                     echo 'stage 6'
                     sh 'docker tag portfolio-v2:latest akash63/portfolio-v2:4_sept'
-                    sh 'docker login'
+                    // sh 'docker login'
                     sh 'docker push akash63/portfolio-v2:4_sept'
                 }
             }
@@ -114,17 +114,11 @@ pipeline {
         }
     }*/
   post {
-        always {
-            echo "Build is completed"
-        }
         success {
             echo "Pipeline success"
         }
         failure {
             echo "Pipeline failed"
-        }
-        cleanup {
-            echo "Build cleaned"
         }
     }
 }
