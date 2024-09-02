@@ -5,7 +5,7 @@ pipeline {
         stage('checkout') {
             steps {
                 echo 'Stage 1--'
-                checkout scmGit(branches: [[name: '*/feature/prod']], extensions: [], userRemoteConfigs: [[credentialsId: 'pipeline', url: 'https://github.com/akashkr101/portfolio.git']])
+                checkout scmGit(branches: [[name: '*/dev']], extensions: [], userRemoteConfigs: [[credentialsId: 'pipeline', url: 'https://github.com/akashkr101/portfolio.git']])
             }
         }
         stage('check') {
