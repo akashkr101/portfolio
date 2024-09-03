@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    environment {
+        DOCKER_HUB_CREDENTIALS = credentials('dckr_pat_aEdRbNlD6z62zTjHDHmWPr8I0CI')
+    }
 
     stages {
         stage('checkout') {
@@ -68,9 +71,12 @@ pipeline {
             steps {
                 script {
                     echo 'stage 6'
-                    sh 'docker tag portfolio-v2:latest akash63/portfolio-v2:4_sept'
+                    docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials-id') {
+                        def app = docker.build("akash63/portfolio-v2:4_sept")
+                        app.push()
+                    //sh 'docker tag portfolio-v2:latest akash63/portfolio-v2:4_sept'
                     //sh 'docker login'
-                    sh 'docker push akash63/portfolio-v2:4_sept'
+                    //sh 'docker push akash63/portfolio-v2:4_sept'
                 }
             }
         }
