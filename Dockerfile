@@ -22,7 +22,7 @@ FROM nginx:alpine
 
 # Copy the built Angular app from the build stage into the nginx web server's html directory
 COPY --from=build /app/dist/portfolio/* /usr/share/nginx/html/
-COPY /app/akash.com /etc/nginx/sites-available/
+COPY akash.com /etc/nginx/sites-available/
 RUN sudo ln -s /etc/nginx/sites-available/example.com /etc/nginx/sites-enabled/
 RUN sudo nginx -t
 
