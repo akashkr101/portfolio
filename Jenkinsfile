@@ -71,7 +71,6 @@ pipeline {
             steps {
                 script {
                     echo 'stage 6'
-                    docker.withRegistry('https://registry.hub.docker.com', 'docker-hub-credentials-id') {
                         def app = docker.build("akash63/portfolio-v2:4_sept")
                         app.push()
                     //sh 'docker tag portfolio-v2:latest akash63/portfolio-v2:4_sept'
