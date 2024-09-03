@@ -44,7 +44,7 @@ pipeline {
                         # Get a list of all Docker images
                         images=$(docker images -q)
                         # Check if there are any Docker images
-                        if ["$images"]; then
+                        if [ -z "$images" ]; then
                             echo "No Docker images found."
                         else
                             echo "Removing all Docker images."
