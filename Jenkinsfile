@@ -68,8 +68,6 @@ pipeline {
             steps {
                 script {
                     echo 'stage 6'
-                        def app = docker.build("akash63/portfolio-v2:4_sept")
-                        app.push()
                     //sh 'docker tag portfolio-v2:latest akash63/portfolio-v2:4_sept'
                     //sh 'docker login'
                     //sh 'docker push akash63/portfolio-v2:4_sept'
