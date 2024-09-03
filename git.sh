@@ -1,4 +1,4 @@
 git add .
-git commit -m "Jenkins update"
+git commit -m "code updated"
 git status
 git push

@@ -1,8 +1,8 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 /.angular
 /.vscode
-/. git.sh
-/. nginx.conf
+/. git
+/. nginx
 
 # Compiled output
 /dist
