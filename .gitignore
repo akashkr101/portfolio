@@ -2,6 +2,7 @@
 /.angular
 /.vscode
 /. git.sh
+/. nginx.conf
 
 # Compiled output
 /dist
