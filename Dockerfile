@@ -22,6 +22,14 @@ FROM nginx:alpine
 
 # Copy the built Angular app from the build stage into the nginx web server's html directory
 COPY --from=build /app/dist/portfolio/* /usr/share/nginx/html/
+COPY /app/akash.com /etc/nginx/sites-available/
+RUN sudo ln -s /etc/nginx/sites-available/example.com /etc/nginx/sites-enabled/
+RUN sudo nginx -t
+
+#RUN cd /etc/nginx/sites-available/
+#RUN sudo touch /etc/nginx/sites-available/akash.com
+#RUN chmod +777 /etc/nginx/sites-available/akash.com
+
 
 # Expose port 80 to the outside world
 EXPOSE 80
