@@ -68,9 +68,9 @@ pipeline {
             steps {
                 script {
                     echo 'stage 6'
-                    //sh 'docker tag portfolio-v2:latest akash63/portfolio-v2:4_sept'
-                    //sh 'docker login'
-                    //sh 'docker push akash63/portfolio-v2:4_sept'
+                    sh 'docker tag portfolio-v2:latest akash63/portfolio-v2:4_sept'
+                    sh 'docker login'
+                    sh 'docker push akash63/portfolio-v2:4_sept'
                 }
             }
         }

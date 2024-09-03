@@ -1,4 +1,4 @@
 git add .
-git commit -m "code updated"
+git commit -m "push dockerhub updated"
 git status
 git push
