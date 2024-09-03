@@ -34,9 +34,7 @@ pipeline {
                             echo "No containers are running."
                         else
                             echo "Stopping and removing all running containers."
-                            # Stop all running containers
                             docker stop $containers
-                            # Remove all stopped containers
                             docker rm $containers
                         fi
                     '''
@@ -48,7 +46,6 @@ pipeline {
                             echo "No Docker images found."
                         else
                             echo "Removing all Docker images."
-                            # Remove all Docker images
                             docker rmi -f $images
                         fi
                     '''
