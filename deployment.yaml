@@ -19,3 +19,18 @@ spec:
         image: akash63/portfolio-v2
         ports:
         - containerPort: 80
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: portfolio-service
+spec:
+  selector:
+    app: angular-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: LoadBalancer

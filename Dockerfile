@@ -22,7 +22,6 @@ FROM nginx:alpine
 
 # Copy the built Angular app from the build stage into the nginx web server's html directory
 COPY --from=build /app/dist/portfolio/* /usr/share/nginx/html/
-COPY nginx.conf /etc/nginx
 
 # Expose port 80 to the outside world
 EXPOSE 80
