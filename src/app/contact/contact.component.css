@@ -23,7 +23,7 @@ h2
 }
 .contact-info, .contact-form{
     flex: 1;
-    color: white;
+    color: whitesmoke;
 }
 .item{
     margin-bottom: 24px;
