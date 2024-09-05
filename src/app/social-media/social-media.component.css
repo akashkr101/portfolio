@@ -1,4 +1,41 @@
 .social-media-section {
+  display: inline-block;
+  text-align: center;
+  margin: 30px;
+  max-width: 800px;
+  border-radius: 50%;
+  background-color: #e0e0e0;
+}
+
+
+.social-media-box {
+  display: inline-block;
+  font-size: 24px; /* Icon size */
+  padding: 10px;
+  margin: 10px;
+  border-radius: 50%; /* Initially makes it circular */
+  animation: zoomInOut 2s infinite ease-in-out; /* Apply animation */
+}
+
+.social-media-box i {
+  padding: 20%;
+  text-align: center;
+}
+
+@keyframes zoomInOut {
+  0% {
+      transform: scale(1); /* Start at original size */
+  }
+  50% {
+      transform: scale(1.8); /* Zoom in */
+  }
+  100% {
+      transform: scale(1); /* Zoom back out */
+  }
+}
+
+/*
+.social-media-section {
   display: inline;
   text-align: center;
   margin: 20px 0;
@@ -6,7 +43,7 @@
   max-width: 800px;
 }
 
-.social-media-box {
+.social-media-box:hover {
   background-color: #fff;
   border: 2px solid #ccc;
   border-radius: 8px;
@@ -15,22 +52,20 @@
   text-align: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s, box-shadow 0.3s;
+  transform: translateY(-10px);
   font-weight: bold;
   text-decoration: none;
   color: #333;
 }
 
 .social-media-container {
-  background-color: green;
+  background-color: white;
   margin: 40px;
-}
-.social-media-box:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .social-media-box i {
+  margin: 3%;
   font-size: 24px;
   color: #333;
-}
+}*/
 
