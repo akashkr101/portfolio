@@ -1,5 +1,7 @@
 git add .
-git commit -m "code updated"
+echo "Enter the commit message: "
+read message
+git commit -m "$message"
 git status
 git push
-sleep 1000s
+sleep 100s
