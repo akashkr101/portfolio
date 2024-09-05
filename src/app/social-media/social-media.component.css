@@ -20,6 +20,7 @@
 .social-media-box i {
   padding: 20%;
   text-align: center;
+  color: blue;
 }
 
 @keyframes zoomInOut {
@@ -27,7 +28,7 @@
       transform: scale(1); /* Start at original size */
   }
   50% {
-      transform: scale(1.8); /* Zoom in */
+      transform: scale(1.4); /* Zoom in */
   }
   100% {
       transform: scale(1); /* Zoom back out */
