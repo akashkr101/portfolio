@@ -27,21 +27,35 @@ body {
     object-fit: cover;
 }
 
-.profile-section {
-    display: inline-grid;
-    grid-template-columns: auto 1fr;
-    gap: 20px;
-    align-items: center;
-    background-color: #fff;
-    border: 2px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 30px;
-    width: 100%;
-    max-width: 90%;
-    margin-top: 20px;
-    margin-bottom: 20px;
+.profile {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+  grid-template-columns: auto 1fr;
+  gap: 20px;
 }
+
+/*.profile-section {
+  display: inline-grid;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+  grid-template-columns: auto 1fr;
+  gap: 20px;
+  align-items: center;
+  background-color: #fff;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  width: 100%;
+  max-width: 90%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}*/
 
 /*--mypic--*/
 .mypic
@@ -59,13 +73,15 @@ body {
 
 
 .career-objective-text {
-    text-align: left;
-    padding-left: 30px;
+  flex-wrap: wrap;
+  text-align: left;
+  padding-left: 30px;
 }
 
 .career-objective-text h2 {
-    margin-top: 0;
-    color: #333;
+  text-align: center;
+  margin-top: 0;
+  color: #333;
 }
 
 h2 {
