@@ -27,17 +27,7 @@ body {
     object-fit: cover;
 }
 
-.profile {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-  margin-top: 20px;
-  grid-template-columns: auto 1fr;
-  gap: 20px;
-}
-
-/*.profile-section {
+.profile-section {
   display: inline-grid;
   flex-wrap: wrap;
   justify-content: center;
@@ -55,7 +45,7 @@ body {
   max-width: 90%;
   margin-top: 20px;
   margin-bottom: 20px;
-}*/
+}
 
 /*--mypic--*/
 .mypic
