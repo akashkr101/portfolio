@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: angular-app
-        image: akash63/portfolio-v2
+        image: akash63/portfolio-v2:new
         ports:
         - containerPort: 4000
 
