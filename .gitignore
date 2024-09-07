@@ -1,9 +1,9 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 /.angular
 /.vscode
-/.git
-/.nginx
-/.Jenkins_setup
+/git
+/nginx
+/Jenkins_setup
 
 # Compiled output
 /dist
