@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: angular-app
-        image: akash63/portfolio-v2
+        image: akash63/portfolio-v2:new
         ports:
         - containerPort: 80
 
@@ -25,7 +25,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: portfolio-service
+  name: portfolio
 spec:
   selector:
     app: angular-app

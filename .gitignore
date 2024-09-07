@@ -4,6 +4,9 @@
 /git
 /nginx
 /Jenkins_setup
+/minikube.txt
+/minikube.sh
+
 
 # Compiled output
 /dist
