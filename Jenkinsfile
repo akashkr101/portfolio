@@ -81,6 +81,13 @@ pipeline {
                 }
             }
         }
+        stage("start minikube") {
+            steps {
+                echo "stage 8"
+                sh 'minikube delete'
+                sh 'minikube start'
+            }
+        }
         
       /*stage('kubernetes') {
             steps {
