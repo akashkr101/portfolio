@@ -54,7 +54,6 @@ pipeline {
                 }
             }
         }*/
-        /*
         stage('Clean Up') {
             steps {
                 script {
@@ -114,7 +113,7 @@ pipeline {
                     sh 'docker ps -a'
                 }
             }
-        }*/
+        }
         
         /*stage("start minikube") {
             steps {
