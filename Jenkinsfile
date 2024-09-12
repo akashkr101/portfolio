@@ -23,15 +23,15 @@ pipeline {
         }
         /*stage('SCM') {
             checkout scm
-        }*/
+        }
         stage('SonarQube Analysis') {
             def scannerHome = tool 'Sonarqube';
             withSonarQubeEnv() {
                 sh "${scannerHome}/bin/sonar-scanner"
             }
-        }
+        }*/
         
-        /*stage('Build') {
+        stage('Build') {
             steps {
                 sh 'ng build --prod'
                 sh 'ng test --watch=false --code-coverage'
@@ -52,7 +52,7 @@ pipeline {
                     }
                 }
             }
-        }*/
+        }
         stage('Clean Up') {
             steps {
                 script {
