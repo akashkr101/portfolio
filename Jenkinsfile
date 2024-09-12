@@ -45,7 +45,7 @@ pipeline {
                 script {
                     sh '''
                         # Get a list of all running containers
-                        containers=$(docker ps --filter "reference=*portfolio*" -q)
+                        containers=$(docker ps --filter "ancestor=portfolio-v2" -q)
                         # Check if there are any running containers
                         if [ -z "$containers" ]; then
                             echo "No 'portfolio' are running."
