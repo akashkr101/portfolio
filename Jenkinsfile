@@ -19,42 +19,6 @@ pipeline {
                 sh 'npm run build'
             }
         }
-        stage('Upload to Artifactory') {
-            steps {
-                // Upload Angular artifacts to Artifactory
-                rtUpload (
-                    serverId: 'Artifactory-Server', // Configured in Jenkins
-                    spec: '''{
-                        "files": [{
-                            "pattern": "dist/**/*",
-                            "target": "s3://portfolio-artifactory/build/"
-                        }]
-                    }'''
-                )
-            }
-        }
-        stage('Push Artifacts to S3') {
-            steps {
-                // Upload the build files to S3
-                s3Upload(
-                    acl: 'Private',
-                    bucket: 'portfolio-artifactory',
-                    path: 'build/',
-                    file: 'dist/**/*'
-                )
-            }
-        }
-        ///stage('Archive Artifacts') {
-        ///    steps {
-        ///        // Archive the dist folder from the Angular build
-        ///        archiveArtifacts 'dist/**/*'
-        ///    }
-        ///}
-        /*stage('Run Test') {
-            steps {
-                sh 'npm run test --watch=false --code-coverage'
-            }
-        }*/
         stage('SonarQube') {
             steps {
                 withSonarQubeEnv('Sonarqube') {
@@ -62,15 +26,6 @@ pipeline {
                 }
             }
         }
-        /*stage('Quality Gate') {
-            steps {
-                script {
-                    timeout(time: 1, unit: 'HOURS') {
-                        waitForQualityGate abortPipeline: true
-                    }
-                }
-            }
-        }*/
         stage('Clean Up') {
             steps {
                 script {
@@ -123,49 +78,12 @@ pipeline {
             steps {
                 script {
                     echo 'Stage 7'
-                    // Run a container from the built image
                     sh 'docker run -d -p 7000:80  portfolio-v2'
                     sh 'docker ps -a'
                 }
             }
         }
-        
-        /*stage("start minikube") {
-            steps {
-                echo "stage 8"
-                sh 'minikube delete'
-                sh 'minikube start'
-            }
-        }*/
-        
-      /*stage('kubernetes') {
-            steps {
-                script {
-                    echo 'stage 8'
-                    sh 'kubectl get pods'
-                    sh 'kubectl get svc'
-                    sh 'kubectl get deploy'
-                }
-            }
-        }*/
     }
-
-    /*post {
-        always {
-            script {
-                emailext (
-                    subject: "Jenkins Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' Completed",
-                    body: """
-                        Job Name: ${env.JOB_NAME}
-                        Build Number: ${env.BUILD_NUMBER}
-                        Build Status: ${currentBuild.currentResult}
-                        Build URL: ${env.BUILD_URL}
-                    """,
-                    to: 'akashkumar.xda@gmail.com'
-                )
-            }
-        }
-    }*/
 
     post {
         success {
