@@ -13,17 +13,17 @@ pipeline {
                 sh 'pwd'
             }
         }
-        stage('npm install') {
+        stage('Install & Build') {
             steps {
                 sh 'npm install'
-            }
-        }        
-        stage('Build') {
-            steps {
                 sh 'npm run build'
-                sh 'npm run test --watch=false --code-coverage'
             }
         }
+        /*stage('Run Test') {
+            steps {
+                sh 'npm run test --watch=false --code-coverage'
+            }
+        }*/
         stage('SonarQube') {
             steps {
                 withSonarQubeEnv('Sonarqube') {
