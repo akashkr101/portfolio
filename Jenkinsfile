@@ -19,6 +19,12 @@ pipeline {
                 sh 'npm run build'
             }
         }
+        stage('Archive Artifacts') {
+            steps {
+                // Archive the dist folder from the Angular build
+                archiveArtifacts 'dist/**/*'
+            }
+        }
         /*stage('Run Test') {
             steps {
                 sh 'npm run test --watch=false --code-coverage'
