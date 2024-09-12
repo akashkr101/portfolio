@@ -19,7 +19,6 @@ pipeline {
             steps {
                 echo 'Stage 3'
                 sh 'npm install'
-                sh 'npm install @angular/cli'
             }
         }
         /*stage('SCM') {
@@ -34,8 +33,9 @@ pipeline {
         
         stage('Build') {
             steps {
-                sh 'npm build --configuration production'
-                sh 'npm test --watch=false --code-coverage'
+                /*sh 'npm build --configuration production'
+                sh 'npm test --watch=false --code-coverage'*/
+                sh 'npm run build'
             }
         }
         stage('SonarQube analysis') {
@@ -54,6 +54,7 @@ pipeline {
                 }
             }
         }
+        /*
         stage('Clean Up') {
             steps {
                 script {
@@ -113,7 +114,7 @@ pipeline {
                     sh 'docker ps -a'
                 }
             }
-        }
+        }*/
         
         /*stage("start minikube") {
             steps {
