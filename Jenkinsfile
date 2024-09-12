@@ -20,7 +20,7 @@ pipeline {
         }        
         stage('Build') {
             steps {
-                sh 'npm run build --configuration production'
+                sh 'npm run build'
                 sh 'npm run test --watch=false --code-coverage'
             }
         }
