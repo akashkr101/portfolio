@@ -19,12 +19,37 @@ pipeline {
                 sh 'npm run build'
             }
         }
-        stage('Archive Artifacts') {
+        stage('Upload to Artifactory') {
             steps {
-                // Archive the dist folder from the Angular build
-                archiveArtifacts 'dist/**/*'
+                // Upload Angular artifacts to Artifactory
+                rtUpload (
+                    serverId: 'Artifactory-Server', // Configured in Jenkins
+                    spec: '''{
+                        "files": [{
+                            "pattern": "dist/**/*",
+                            "target": "s3://portfolio-artifactory/build/"
+                        }]
+                    }'''
+                )
             }
         }
+        stage('Push Artifacts to S3') {
+            steps {
+                // Upload the build files to S3
+                s3Upload(
+                    acl: 'Private',
+                    bucket: 'portfolio-artifactory',
+                    path: 'build/',
+                    file: 'dist/**/*'
+                )
+            }
+        }
+        ///stage('Archive Artifacts') {
+        ///    steps {
+        ///        // Archive the dist folder from the Angular build
+        ///        archiveArtifacts 'dist/**/*'
+        ///    }
+        ///}
         /*stage('Run Test') {
             steps {
                 sh 'npm run test --watch=false --code-coverage'
