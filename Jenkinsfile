@@ -34,8 +34,8 @@ pipeline {
         
         stage('Build') {
             steps {
-                sh 'ng build --configuration production'
-                sh 'ng test --watch=false --code-coverage'
+                sh 'npm build --configuration production'
+                sh 'npm test --watch=false --code-coverage'
             }
         }
         stage('SonarQube analysis') {
