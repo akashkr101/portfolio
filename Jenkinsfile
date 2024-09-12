@@ -21,6 +21,39 @@ pipeline {
                 sh 'npm install'
             }
         }
+        node {
+            stage('SCM') {
+                checkout scm
+            }
+            stage('SonarQube Analysis') {
+                def scannerHome = tool 'Sonarqube';
+                withSonarQubeEnv() {
+                    sh "${scannerHome}/bin/sonar-scanner"
+                }
+            }
+        }
+        /*stage('Build') {
+            steps {
+                sh 'ng build --prod'
+                sh 'ng test --watch=false --code-coverage'
+            }
+        }
+        stage('SonarQube analysis') {
+            steps {
+                withSonarQubeEnv('Sonarqube') {
+                    sh 'sonar-scanner'
+                }
+            }
+        }
+        stage('Quality Gate') {
+            steps {
+                script {
+                    timeout(time: 1, unit: 'HOURS') {
+                        waitForQualityGate abortPipeline: true
+                    }
+                }
+            }
+        }*/
         stage('Clean Up') {
             steps {
                 script {
@@ -81,6 +114,7 @@ pipeline {
                 }
             }
         }
+        
         /*stage("start minikube") {
             steps {
                 echo "stage 8"
