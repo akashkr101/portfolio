@@ -21,17 +21,16 @@ pipeline {
                 sh 'npm install'
             }
         }
-        node {
-            stage('SCM') {
-                checkout scm
-            }
-            stage('SonarQube Analysis') {
-                def scannerHome = tool 'Sonarqube';
-                withSonarQubeEnv() {
-                    sh "${scannerHome}/bin/sonar-scanner"
-                }
+        stage('SCM') {
+            checkout scm
+        }
+        stage('SonarQube Analysis') {
+            def scannerHome = tool 'Sonarqube';
+            withSonarQubeEnv() {
+                sh "${scannerHome}/bin/sonar-scanner"
             }
         }
+        
         /*stage('Build') {
             steps {
                 sh 'ng build --prod'
