@@ -4,41 +4,27 @@ pipeline {
     stages {
         stage('checkout') {
             steps {
-                echo 'Stage 1'
                 checkout scmGit(branches: [[name: '*/dev']], extensions: [], userRemoteConfigs: [[credentialsId: 'pipeline', url: 'https://github.com/akashkr101/portfolio.git']])
             }
         }
         stage('directory info') {
             steps {
-                echo 'Stage 2'
                 sh 'ls'
                 sh 'pwd'
             }
         }
         stage('npm install') {
             steps {
-                echo 'Stage 3'
                 sh 'npm install'
             }
-        }
-        /*stage('SCM') {
-            checkout scm
-        }
-        stage('SonarQube Analysis') {
-            def scannerHome = tool 'Sonarqube';
-            withSonarQubeEnv() {
-                sh "${scannerHome}/bin/sonar-scanner"
-            }
-        }*/
-        
+        }        
         stage('Build') {
             steps {
-                /*sh 'npm build --configuration production'
-                sh 'npm test --watch=false --code-coverage'*/
-                sh 'npm run build'
+                sh 'npm run build --configuration production'
+                sh 'npm run test --watch=false --code-coverage'
             }
         }
-        stage('SonarQube analysis') {
+        stage('SonarQube') {
             steps {
                 withSonarQubeEnv('Sonarqube') {
                     sh 'sonar-scanner'
@@ -57,28 +43,26 @@ pipeline {
         stage('Clean Up') {
             steps {
                 script {
-                    echo 'Stage 4'
-                    // This will run a shell script in the Jenkins pipeline
                     sh '''
                         # Get a list of all running containers
-                        containers=$(docker ps -q)
+                        containers=$(docker ps --filter "name=portfolio" -q)
                         # Check if there are any running containers
                         if [ -z "$containers" ]; then
-                            echo "No containers are running."
+                            echo "No 'portfolio' are running."
                         else
-                            echo "Stopping and removing all running containers."
+                            echo "Stopping and removing portfolio containers."
                             docker stop $containers
                             docker rm $containers
                         fi
                     '''
                     sh '''
                         # Get a list of all Docker images
-                        images=$(docker images -q)
+                        images=$(docker images --filter "reference=*portfolio*" -q)
                         # Check if there are any Docker images
                         if [ -z "$images" ]; then
-                            echo "No Docker images found."
+                            echo "No 'portfolio' images found."
                         else
-                            echo "Removing all Docker images."
+                            echo "Removing 'portfolio' images."
                             docker rmi -f $images
                         fi
                     '''
