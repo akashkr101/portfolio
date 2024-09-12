@@ -34,7 +34,7 @@ pipeline {
         
         stage('Build') {
             steps {
-                sh 'ng build --prod'
+                sh 'ng build --configuration production'
                 sh 'ng test --watch=false --code-coverage'
             }
         }
