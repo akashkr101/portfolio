@@ -21,9 +21,9 @@ pipeline {
                 sh 'npm install'
             }
         }
-        stage('SCM') {
+        /*stage('SCM') {
             checkout scm
-        }
+        }*/
         stage('SonarQube Analysis') {
             def scannerHome = tool 'Sonarqube';
             withSonarQubeEnv() {
