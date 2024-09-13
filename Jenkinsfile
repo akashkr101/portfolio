@@ -3,7 +3,7 @@ pipeline {
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials') // ID of the DockerHub credentials in Jenkins
         IMAGE_NAME = 'akash63/portfolio-v2' // DockerHub username and image name
-        IMAGE_TAG = 'sept' // or use git commit ID, branch name, or build number as tag
+        IMAGE_TAG = 'sep' // or use git commit ID, branch name, or build number as tag
     }  
 
     stages {
