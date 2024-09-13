@@ -18,10 +18,9 @@ spec:
       - name: angular-app
         image: akash63/portfolio-v2:new
         ports:
-        - containerPort: 4000
+        - containerPort: 80
 
 ---
-
 apiVersion: v1
 kind: Service
 metadata:
@@ -32,5 +31,5 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 4000
+      targetPort: 80
   type: LoadBalancer
