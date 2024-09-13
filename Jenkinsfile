@@ -60,14 +60,14 @@ pipeline {
                 }
             }
         }
-        stage('Build Docker Image') {
+        /*stage('Build Docker Image') {
             steps {
                 script {
                     docker.build("${IMAGE_NAME}:${IMAGE_TAG}")
+                    echo "Build successful"
                 }
             }
         }
-
         stage('Push to DockerHub') {
             steps {
                 script {
@@ -76,8 +76,8 @@ pipeline {
                     }
                 }
             }
-        }
-        /*stage('Build Docker Image') {
+        }*/
+        stage('Build Docker Image') {
             steps {
                 script {
                     echo 'Stage 5'
@@ -90,12 +90,11 @@ pipeline {
             steps {
                 script {
                     echo 'stage 6'
-                    //sh 'docker tag portfolio-v2:latest akash63/portfolio-v2:4_sept'
-                    //sh 'docker login'
-                    //sh 'docker push akash63/portfolio-v2:4_sept'
+                    sh 'docker tag portfolio-v2:latest akash63/portfolio-v2:13_sept'
+                    sh 'docker push akash63/portfolio-v2:4_sept'
                 }
             }
-        }*/
+        }
         stage('Run Docker Container') {
             steps {
                 script {
