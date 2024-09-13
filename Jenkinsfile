@@ -1,11 +1,5 @@
 pipeline {
     agent any
-    environment {
-        DOCKERHUB_CREDENTIALS = credentials('dockerhub-credentials') // ID of the DockerHub credentials in Jenkins
-        IMAGE_NAME = 'akash63/portfolio-v2' // DockerHub username and image name
-        IMAGE_TAG = 'sep' // or use git commit ID, branch name, or build number as tag
-    }  
-
     stages {
         stage('checkout') {
             steps {
@@ -60,23 +54,6 @@ pipeline {
                 }
             }
         }
-        /*stage('Build Docker Image') {
-            steps {
-                script {
-                    docker.build("${IMAGE_NAME}:${IMAGE_TAG}")
-                    echo "Build successful"
-                }
-            }
-        }
-        stage('Push to DockerHub') {
-            steps {
-                script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'DOCKERHUB_CREDENTIALS') {
-                        docker.image("${IMAGE_NAME}:${IMAGE_TAG}").push()
-                    }
-                }
-            }
-        }*/
         stage('Build Docker Image') {
             steps {
                 script {
@@ -86,7 +63,7 @@ pipeline {
                 }
             }
         }
-        stage ('Push to Docker Hub') {
+        /*stage ('Push to Docker Hub') {
             steps {
                 script {
                     echo 'stage 6'
@@ -95,7 +72,7 @@ pipeline {
                     sh 'docker push akash63/portfolio-v2:sept'
                 }
             }
-        }
+        }*/
         stage('Run Docker Container') {
             steps {
                 script {
