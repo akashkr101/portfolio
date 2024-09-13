@@ -93,7 +93,8 @@ pipeline {
                     sh 'docker tag portfolio-v2:latest akash63/portfolio-v2:sept'
                     docker.withRegistry('https://registry.hub.docker.com', 'DOCKERHUB_CREDENTIALS') {
                         //sh 'docker push akash63/portfolio-v2:13_sept'
-                        docker.image("${IMAGE_NAME}:${IMAGE_TAG}").push()
+                        //sh docker login $dockerhub-credentials
+                        docker.image("${IMAGE_NAME}:${IMAGE_TAG}").push()('--debug')
                     }
                 }
             }
