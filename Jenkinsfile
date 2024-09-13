@@ -93,7 +93,6 @@ pipeline {
                     sh 'docker tag portfolio-v2:latest akash63/portfolio-v2:sept'
                     sh 'docker login $dockerhub-credentials'
                     sh 'docker push akash63/portfolio-v2:sept'
-                    }
                 }
             }
         }
