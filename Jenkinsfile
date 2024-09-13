@@ -57,7 +57,6 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    echo 'Stage 5'
                     sh 'docker build -t portfolio-v2 .'
                     sh 'docker images'
                 }
@@ -66,9 +65,7 @@ pipeline {
         /*stage ('Push to Docker Hub') {
             steps {
                 script {
-                    echo 'stage 6'
                     sh 'docker tag portfolio-v2:latest akash63/portfolio-v2:sept'
-                    sh 'docker login $DOCKERHUB_CREDENTIALS'
                     sh 'docker push akash63/portfolio-v2:sept'
                 }
             }
@@ -76,7 +73,6 @@ pipeline {
         stage('Run Docker Container') {
             steps {
                 script {
-                    echo 'Stage 7'
                     sh 'docker run -d -p 7000:80  portfolio-v2'
                     sh 'docker ps -a'
                 }
