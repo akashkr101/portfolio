@@ -1,5 +1,16 @@
 pipeline {
     agent any
+    parameters {
+        choice(
+            name: 'ENVIRONMENT',
+            choices: ['dev', 'qa'],
+            description: 'Select the environment to run the build'
+        )
+    }
+    environment {
+        // Define a variable to control the environment
+        ENVIRONMENT = "${params.ENVIRONMENT}"
+    }
     stages {
         stage('checkout') {
             steps {
@@ -18,13 +29,53 @@ pipeline {
                 sh 'npm run build'
             }
         }
+        stage('Prepare SonarQube Analysis') {
+            steps {
+                script {
+                    sh 'sonar-scanner --version'
+                    if (ENVIRONMENT == 'dev') {
+                        env.SONAR_PROJECT_KEY = 'portfolio-dev'
+                        env.SONAR_ENVIRONMENT = 'dev'
+                    } else if (ENVIRONMENT == 'qa') {
+                        env.SONAR_PROJECT_KEY = 'portfolio-qa'
+                        env.SONAR_ENVIRONMENT = 'qa'
+                    } else {
+                        error("Unknown environment: ${ENVIRONMENT}")
+                    }
+
+                    echo "Running SonarQube analysis for environment: ${ENVIRONMENT}"
+                }
+            }
+        }
+        stage('Verify sonar-scanner') {
+            steps {
+                echo 'new stage'
+                sh 'sonar-scanner --version'  // Check if sonar-scanner is available
+            }
+        }
+        stage('Run SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('Sonarqube') { // Name of your SonarQube server configured in Jenkins
+                    sh '''
+                    echo "Running sonar-scanner with the following parameters:"
+                    echo "sonar.projectKey=${SONAR_PROJECT_KEY}"
+                    echo "sonar.environment=${SONAR_ENVIRONMENT}"
+                    sonar-scanner \
+                      -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
+                      -Dsonar.environment=${SONAR_ENVIRONMENT} \
+                      -Dsonar.sources=src
+                    '''
+                }
+            }
+        }
+        /*
         stage('SonarQube') {
             steps {
                 withSonarQubeEnv('Sonarqube') {
                     sh 'sonar-scanner'
                 }
             }
-        }
+        }*/
         stage('Clean Up') {
             steps {
                 script {
