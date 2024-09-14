@@ -32,6 +32,7 @@ pipeline {
         stage('Prepare SonarQube Analysis') {
             steps {
                 script {
+                    sh 'sonar-scanner --version'
                     if (ENVIRONMENT == 'dev') {
                         env.SONAR_PROJECT_KEY = 'your_project_dev'
                         env.SONAR_ENVIRONMENT = 'dev'
@@ -46,10 +47,18 @@ pipeline {
                 }
             }
         }
+        stage('Verify sonar-scanner') {
+            steps {
+                sh 'sonar-scanner --version'  // Check if sonar-scanner is available
+            }
+        }
         stage('Run SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('SonarQube') { // Name of your SonarQube server configured in Jenkins
                     sh """
+                    echo "Running sonar-scanner with the following parameters:"
+                    echo "sonar.projectKey=${SONAR_PROJECT_KEY}"
+                    echo "sonar.environment=${SONAR_ENVIRONMENT}"
                     sonar-scanner \
                       -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
                       -Dsonar.environment=${SONAR_ENVIRONMENT} \
