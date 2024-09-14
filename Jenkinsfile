@@ -22,18 +22,17 @@ pipeline {
                 sh 'npm run build'
             }
         }
-        stage('Prepare SonarQube Analysis') {
+        stage('Prepare') {
             steps {
                 script {
-                    // Determine environment based on branch name
-                    if (BRANCH_NAME.startsWith('dev')) {
+                    if (BRANCH_NAME == 'dev') {
                         env.SONAR_PROJECT_KEY = 'portfolio-dev'
-                        env.SONAR_ENVIRONMENT = 'dev' // or any other environment logic
-                    } else if (BRANCH_NAME.startsWith('qa')) {
-                        env.SONAR_PROJECT_KEY = 'your_project_release'
-                        env.SONAR_ENVIRONMENT = 'qa' // or any other environment logic
+                        env.SONAR_ENVIRONMENT = 'dev'
+                    } else if (BRANCH_NAME == 'qa') {
+                        env.SONAR_PROJECT_KEY = 'your_project_qa'
+                        env.SONAR_ENVIRONMENT = 'qa'
                     } else {
-                        error("Unknown branch name: ${BRANCH_NAME}")
+                        error("Unknown branch: ${BRANCH_NAME}")
                     }
 
                     echo "Running SonarQube analysis for branch: ${BRANCH_NAME}"
