@@ -3,7 +3,6 @@ pipeline {
     environment {
         // Detect branch name
         BRANCH_NAME = "${env.BRANCH_NAME ?: env.GIT_BRANCH}"
-        echo "Running SonarQube analysis for branch: ${BRANCH_NAME}"
     }
     stages {
         stage('checkout') {
@@ -26,6 +25,7 @@ pipeline {
         stage('Prepare') {
             steps {
                 script {
+                    echo "Running SonarQube analysis for branch: ${BRANCH_NAME}"
                     if (BRANCH_NAME == 'dev') {
                         env.SONAR_PROJECT_KEY = 'portfolio-dev'
                         env.SONAR_ENVIRONMENT = 'dev'
