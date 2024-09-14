@@ -60,7 +60,10 @@ pipeline {
                     echo "Running sonar-scanner with the following parameters:"
                     echo "sonar.projectKey=${SONAR_PROJECT_KEY}"
                     echo "sonar.environment=${SONAR_ENVIRONMENT}"
-                    
+                    sonar-scanner \
+                      -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
+                      -Dsonar.environment=${SONAR_ENVIRONMENT} \
+                      -Dsonar.sources=src
                     '''
                 }
             }
