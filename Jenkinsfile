@@ -27,7 +27,7 @@ pipeline {
                 script {
                     // Determine environment based on branch name
                     if (BRANCH_NAME.startsWith('dev')) {
-                        env.SONAR_PROJECT_KEY = 'your_project_feature'
+                        env.SONAR_PROJECT_KEY = 'portfolio-dev'
                         env.SONAR_ENVIRONMENT = 'dev' // or any other environment logic
                     } else if (BRANCH_NAME.startsWith('qa')) {
                         env.SONAR_PROJECT_KEY = 'your_project_release'
