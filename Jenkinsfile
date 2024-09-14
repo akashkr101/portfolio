@@ -34,10 +34,10 @@ pipeline {
                 script {
                     sh 'sonar-scanner --version'
                     if (ENVIRONMENT == 'dev') {
-                        env.SONAR_PROJECT_KEY = 'your_project_dev'
+                        env.SONAR_PROJECT_KEY = 'portfolio-dev'
                         env.SONAR_ENVIRONMENT = 'dev'
                     } else if (ENVIRONMENT == 'qa') {
-                        env.SONAR_PROJECT_KEY = 'your_project_qa'
+                        env.SONAR_PROJECT_KEY = 'portfolio-qa'
                         env.SONAR_ENVIRONMENT = 'qa'
                     } else {
                         error("Unknown environment: ${ENVIRONMENT}")
