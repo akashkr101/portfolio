@@ -1,5 +1,15 @@
 pipeline {
     agent any
+    def envMap = [
+        dev: [
+            SONAR_PROJECT_KEY: 'your_project_dev',
+            SONAR_ENVIRONMENT: 'dev'
+        ],
+        qa: [
+            SONAR_PROJECT_KEY: 'your_project_qa',
+            SONAR_ENVIRONMENT: 'qa'
+        ]
+    ]
     stages {
         stage('checkout') {
             steps {
@@ -18,13 +28,37 @@ pipeline {
                 sh 'npm run build'
             }
         }
+        stage('Prepare SonarQube Analysis') {
+            def selectedEnv = params.ENVIRONMENT ?: 'dev'  // Default to 'dev' if no parameter is passed
+            def sonarProps = envMap[selectedEnv]
+
+            echo "Running for environment: ${selectedEnv}"
+            echo "Sonar Project Key: ${sonarProps.SONAR_PROJECT_KEY}"
+            echo "Sonar Environment: ${sonarProps.SONAR_ENVIRONMENT}"
+
+            // Set environment variables
+            env.SONAR_PROJECT_KEY = sonarProps.SONAR_PROJECT_KEY
+            env.SONAR_ENVIRONMENT = sonarProps.SONAR_ENVIRONMENT
+        }
+
+        stage('Run SonarQube Analysis') {
+            withSonarQubeEnv('SonarQube') {
+                sh """
+                sonar-scanner \
+                -Dsonar.projectKey=${env.SONAR_PROJECT_KEY} \
+                -Dsonar.environment=${env.SONAR_ENVIRONMENT} \
+                -Dsonar.sources=src
+                """
+            }
+        }
+        /*
         stage('SonarQube') {
             steps {
                 withSonarQubeEnv('Sonarqube') {
                     sh 'sonar-scanner'
                 }
             }
-        }
+        }*/
         stage('Clean Up') {
             steps {
                 script {
