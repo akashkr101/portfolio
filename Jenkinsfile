@@ -55,15 +55,12 @@ pipeline {
         }
         stage('Run SonarQube Analysis') {
             steps {
-                withSonarQubeEnv('sonarqube') { // Name of your SonarQube server configured in Jenkins
+                withSonarQubeEnv('Sonarqube') { // Name of your SonarQube server configured in Jenkins
                     sh '''
                     echo "Running sonar-scanner with the following parameters:"
                     echo "sonar.projectKey=${SONAR_PROJECT_KEY}"
                     echo "sonar.environment=${SONAR_ENVIRONMENT}"
-                    sonar-scanner \
-                      -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
-                      -Dsonar.environment=${SONAR_ENVIRONMENT} \
-                      -Dsonar.sources=src
+                    
                     '''
                 }
             }
