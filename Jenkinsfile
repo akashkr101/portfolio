@@ -1,15 +1,16 @@
 pipeline {
     agent any
-    def envMap = [
-        dev: [
-            SONAR_PROJECT_KEY: 'your_project_dev',
-            SONAR_ENVIRONMENT: 'dev'
-        ],
-        qa: [
-            SONAR_PROJECT_KEY: 'your_project_qa',
-            SONAR_ENVIRONMENT: 'qa'
-        ]
-    ]
+    parameters {
+        choice(
+            name: 'ENVIRONMENT',
+            choices: ['dev', 'qa'],
+            description: 'Select the environment to run the build'
+        )
+    }
+    environment {
+        // Define a variable to control the environment
+        ENVIRONMENT = "${params.ENVIRONMENT}"
+    }
     stages {
         stage('checkout') {
             steps {
@@ -29,26 +30,32 @@ pipeline {
             }
         }
         stage('Prepare SonarQube Analysis') {
-            def selectedEnv = params.ENVIRONMENT ?: 'dev'  // Default to 'dev' if no parameter is passed
-            def sonarProps = envMap[selectedEnv]
+            steps {
+                script {
+                    if (ENVIRONMENT == 'dev') {
+                        env.SONAR_PROJECT_KEY = 'your_project_dev'
+                        env.SONAR_ENVIRONMENT = 'dev'
+                    } else if (ENVIRONMENT == 'qa') {
+                        env.SONAR_PROJECT_KEY = 'your_project_qa'
+                        env.SONAR_ENVIRONMENT = 'qa'
+                    } else {
+                        error("Unknown environment: ${ENVIRONMENT}")
+                    }
 
-            echo "Running for environment: ${selectedEnv}"
-            echo "Sonar Project Key: ${sonarProps.SONAR_PROJECT_KEY}"
-            echo "Sonar Environment: ${sonarProps.SONAR_ENVIRONMENT}"
-
-            // Set environment variables
-            env.SONAR_PROJECT_KEY = sonarProps.SONAR_PROJECT_KEY
-            env.SONAR_ENVIRONMENT = sonarProps.SONAR_ENVIRONMENT
+                    echo "Running SonarQube analysis for environment: ${ENVIRONMENT}"
+                }
+            }
         }
-
         stage('Run SonarQube Analysis') {
-            withSonarQubeEnv('SonarQube') {
-                sh """
-                sonar-scanner \
-                -Dsonar.projectKey=${env.SONAR_PROJECT_KEY} \
-                -Dsonar.environment=${env.SONAR_ENVIRONMENT} \
-                -Dsonar.sources=src
-                """
+            steps {
+                withSonarQubeEnv('SonarQube') { // Name of your SonarQube server configured in Jenkins
+                    sh """
+                    sonar-scanner \
+                      -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
+                      -Dsonar.environment=${SONAR_ENVIRONMENT} \
+                      -Dsonar.sources=src
+                    """
+                }
             }
         }
         /*
