@@ -49,6 +49,7 @@ pipeline {
         }
         stage('Verify sonar-scanner') {
             steps {
+                echo 'new stage'
                 sh 'sonar-scanner --version'  // Check if sonar-scanner is available
             }
         }
