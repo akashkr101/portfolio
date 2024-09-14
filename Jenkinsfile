@@ -26,11 +26,11 @@ pipeline {
             steps {
                 script {
                     echo "Running SonarQube analysis for branch: ${BRANCH_NAME}"
-                    if (BRANCH_NAME == 'dev') {
+                    if (BRANCH_NAME == 'origin/dev') {
                         env.SONAR_PROJECT_KEY = 'portfolio-dev'
                         env.SONAR_ENVIRONMENT = 'dev'
-                    } else if (BRANCH_NAME == 'qa') {
-                        env.SONAR_PROJECT_KEY = 'your_project_qa'
+                    } else if (BRANCH_NAME == 'origin/qa') {
+                        env.SONAR_PROJECT_KEY = 'portfolio-qa'
                         env.SONAR_ENVIRONMENT = 'qa'
                     } else {
                         error("Unknown branch: ${BRANCH_NAME}")
