@@ -1,15 +1,8 @@
 pipeline {
     agent any
-    parameters {
-        choice(
-            name: 'ENVIRONMENT',
-            choices: ['dev', 'qa'],
-            description: 'Select the environment to run the build'
-        )
-    }
     environment {
-        // Define a variable to control the environment
-        ENVIRONMENT = "${params.ENVIRONMENT}"
+        // Detect branch name
+        BRANCH_NAME = "${env.BRANCH_NAME ?: env.GIT_BRANCH}"
     }
     stages {
         stage('checkout') {
@@ -32,18 +25,18 @@ pipeline {
         stage('Prepare SonarQube Analysis') {
             steps {
                 script {
-                    sh 'sonar-scanner --version'
-                    if (ENVIRONMENT == 'dev') {
-                        env.SONAR_PROJECT_KEY = 'portfolio-dev'
-                        env.SONAR_ENVIRONMENT = 'dev'
-                    } else if (ENVIRONMENT == 'qa') {
-                        env.SONAR_PROJECT_KEY = 'portfolio-qa'
-                        env.SONAR_ENVIRONMENT = 'qa'
+                    // Determine environment based on branch name
+                    if (BRANCH_NAME.startsWith('feature/')) {
+                        env.SONAR_PROJECT_KEY = 'your_project_feature'
+                        env.SONAR_ENVIRONMENT = 'dev' // or any other environment logic
+                    } else if (BRANCH_NAME.startsWith('release/')) {
+                        env.SONAR_PROJECT_KEY = 'your_project_release'
+                        env.SONAR_ENVIRONMENT = 'qa' // or any other environment logic
                     } else {
-                        error("Unknown environment: ${ENVIRONMENT}")
+                        error("Unknown branch name: ${BRANCH_NAME}")
                     }
 
-                    echo "Running SonarQube analysis for environment: ${ENVIRONMENT}"
+                    echo "Running SonarQube analysis for branch: ${BRANCH_NAME}"
                 }
             }
         }
