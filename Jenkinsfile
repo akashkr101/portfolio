@@ -22,7 +22,7 @@ pipeline {
                 sh 'npm run build'
             }
         }
-        stage('Prepare') {
+        stage('Prepare SonarQube analysis') {
             steps {
                 script {
                     echo "Running SonarQube analysis for branch: ${BRANCH_NAME}"
@@ -35,8 +35,6 @@ pipeline {
                     } else {
                         error("Unknown branch: ${BRANCH_NAME}")
                     }
-
-                    echo "Running SonarQube analysis for branch: ${BRANCH_NAME}"
                 }
             }
         }
@@ -61,14 +59,6 @@ pipeline {
                 }
             }
         }
-        /*
-        stage('SonarQube') {
-            steps {
-                withSonarQubeEnv('Sonarqube') {
-                    sh 'sonar-scanner'
-                }
-            }
-        }*/
         stage('Clean Up') {
             steps {
                 script {
