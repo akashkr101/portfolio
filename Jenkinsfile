@@ -73,7 +73,7 @@ pipeline {
         stage('Run Docker Container') {
             steps {
                 script {
-                    sh 'docker run -d -p 7000:80  portfolio-v2'
+                    sh 'docker run -d -p 5000:80  portfolio-v2'
                     sh 'docker ps -a'
                 }
             }
