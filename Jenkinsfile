@@ -26,10 +26,10 @@ pipeline {
             steps {
                 script {
                     // Determine environment based on branch name
-                    if (BRANCH_NAME.startsWith('feature/')) {
+                    if (BRANCH_NAME.startsWith('dev')) {
                         env.SONAR_PROJECT_KEY = 'your_project_feature'
                         env.SONAR_ENVIRONMENT = 'dev' // or any other environment logic
-                    } else if (BRANCH_NAME.startsWith('release/')) {
+                    } else if (BRANCH_NAME.startsWith('qa')) {
                         env.SONAR_PROJECT_KEY = 'your_project_release'
                         env.SONAR_ENVIRONMENT = 'qa' // or any other environment logic
                     } else {
