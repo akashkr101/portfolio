@@ -10,7 +10,7 @@ pipeline {
                 checkout scmGit(branches: [[name: '*/dev']], extensions: [], userRemoteConfigs: [[credentialsId: 'pipeline', url: 'https://github.com/akashkr101/portfolio.git']])
             }
         }
-        stage('directory info') {
+        /*stage('directory info') {
             steps {
                 sh 'ls'
                 sh 'pwd'
@@ -58,7 +58,7 @@ pipeline {
                     '''
                 }
             }
-        }
+        }*/
         stage('Clean Up') {
             steps {
                 script {
