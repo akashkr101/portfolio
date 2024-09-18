@@ -12,8 +12,9 @@ pipeline {
         }
         /*stage('directory info') {
             steps {
+                echo "testing"
                 sh 'ls'
-                sh 'pwd'
+                sh 'pwd' 
             }
         }
         stage('Install & Build') {
