@@ -12,8 +12,8 @@ pipeline {
         }
         stage('directory info') {
             steps {
-                sh 'ls'
-                sh 'pwd'
+                ///sh 'ls'
+                ///sh 'pwd'
             }
         }
         stage('Install & Build') {
