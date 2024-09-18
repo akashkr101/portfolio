@@ -12,6 +12,7 @@ pipeline {
         }
         stage('directory info') {
             steps {
+                echo "testing locally"
                 ///sh 'ls'
                 ///sh 'pwd'
             }
