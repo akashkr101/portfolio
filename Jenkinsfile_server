@@ -3,8 +3,7 @@ pipeline {
     environment {
         // Detect branch name
         BRANCH_NAME = "${env.BRANCH_NAME ?: env.GIT_BRANCH}"
-    }
-    environment {
+
         App_NAME = "portfolio-v2"
 		RELEASE = "1.0.0"
 		DOCKER_USER = "akash63"
@@ -12,6 +11,7 @@ pipeline {
 		IMAGE_NAME = "${DOCKER_USER}" +"/"+ "${APP_NAME}"
 		IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}"
     }
+    
     stages {
         stage('checkout') {
             steps {
