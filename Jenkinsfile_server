@@ -5,7 +5,7 @@ pipeline {
         BRANCH_NAME = "${env.BRANCH_NAME ?: env.GIT_BRANCH}"
 
         APP_NAME = "portfolio-v2"
-		RELEASE = "1.0.0"
+		RELEASE = "2.0.0"
 		DOCKER_USER = "akash63"
 		DOCKER_PASS = "dockerhub-credentials"
 		IMAGE_NAME = "${DOCKER_USER}" +"/"+ "${APP_NAME}"
@@ -117,7 +117,7 @@ pipeline {
 					
 					docker.withRegistry('', DOCKER_PASS) {
 						docker_image.push("${IMAGE_TAG}")
-						docker_image.push('latest')
+						///docker_image.push('latest')
 					}
                 }
             }
