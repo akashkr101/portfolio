@@ -33,3 +33,4 @@ jobs:
 
     - name: Test app response
       run: curl -s http://localhost:8080
+
