@@ -1,0 +1,35 @@
+name: Build & Test Angular Docker Image
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build Angular app
+      run: npm run build --prod
+
+    - name: Build Docker image
+      run: docker build -t angular-nginx-app .
+
+    - name: Run Docker container
+      run: |
+        docker run -d -p 8080:80 --name test-container angular-nginx-app
+        sleep 5
+
+    - name: Test app response
+      run: curl -s http://localhost:8080
