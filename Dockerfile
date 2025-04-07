@@ -1,5 +1,6 @@
 # Use an official Node.js image as a base
 # line specifies that you want to use the latest Node.js image as the base for a build stage.
+#
 FROM node:latest AS build
 
 # Set the working directory in the container
