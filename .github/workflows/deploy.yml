@@ -7,7 +7,7 @@ on:
 jobs:
 #Step-1
   Install:
-    runs-on: ubuntu-latest
+    runs-on: self
     env:
       IMAGE_NAME: your-dockerhub-username/your-angular-app
     steps:
@@ -19,9 +19,9 @@ jobs:
           node-version: '18'
       - name: Install Dependencies
         run: npm install
-        
+#Step-2        
   Build:
-    runs-on: ubuntu-latest
+    runs-on: self
     needs: Install
     steps:
       - name: Set up Node.js
@@ -30,9 +30,9 @@ jobs:
           node-version: '18'
       - name: Build Angular App
         run: npm run build
-
+#Step-3
   Docker-Image:
-    runs-on: ubuntu-latest
+    runs-on: self
     needs: Build
     steps:      
       - name: Log in to Docker Hub
@@ -41,9 +41,9 @@ jobs:
         run: docker build -t $IMAGE_NAME:latest .
       - name: Push Docker Image to Docker Hub
         run: docker push $IMAGE_NAME:latest
-
+#Step-4
   Docker-Container:
-    runs-on: ubuntu-latest
+    runs-on: self
     needs: Docker-Image
     steps: 
       - name: Create Container
