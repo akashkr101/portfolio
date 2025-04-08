@@ -28,7 +28,9 @@ jobs:
     needs: Install
     steps:
       - name: Build Angular App
-        run: npm run Build
+        run: |
+        npm install -g @angular/cli
+        ng build
 
   Docker-Image:
     runs-on: ubuntu-latest
