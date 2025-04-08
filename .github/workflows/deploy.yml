@@ -30,7 +30,7 @@ jobs:
       - name: Build Angular App
         run: npm run Build
 
-  Docker Image:
+  Docker-Image:
     runs-on: ubuntu-latest
     needs: Build
     steps:      
@@ -43,11 +43,11 @@ jobs:
       - name: Push Docker Image to Docker Hub
         run: docker push $IMAGE_NAME:latest
   
-  Docker Container:
+  Docker-Container:
     runs-on: ubuntu-latest
-    needs: Image
+    needs: Docker-Image
     steps: 
-      - name : Create Container:
+      - name : Create Container
         run: |
           docker run -d -p 8080:80 --name angular-container $IMAGE_NAME:latest
           sleep 10
