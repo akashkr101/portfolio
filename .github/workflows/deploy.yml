@@ -5,6 +5,7 @@ on:
     branches: ["dev"]
 
 jobs:
+  #Step-1
   Install:
     runs-on: ubuntu-latest
 
@@ -14,8 +15,6 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
-        with:
-          path: portfolio
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -24,7 +23,8 @@ jobs:
 
       - name: Install Dependencies
         run: npm install
-
+        
+  #Step-2
   Build:
     runs-on: ubuntu-latest
     needs: Install
@@ -32,8 +32,10 @@ jobs:
       - name: Build Angular App
         run: |
           npm install -g @angular/cli
-          npm run build
-
+          ng build
+        with:
+          path: portfolio
+  #Step-3
   Docker-Image:
     runs-on: ubuntu-latest
     needs: Build
@@ -46,7 +48,7 @@ jobs:
 
       - name: Push Docker Image to Docker Hub
         run: docker push $IMAGE_NAME:latest
-  
+  #Step-4
   Docker-Container:
     runs-on: ubuntu-latest
     needs: Docker-Image
