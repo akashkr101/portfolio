@@ -29,7 +29,9 @@ jobs:
         with:
           node-version: '18'
       - name: Build Angular App
-        run: npm run build
+        run: |
+          npm install -g @angular/cli
+          ng build
 #Step-3
   Docker-Image:
     runs-on: self
