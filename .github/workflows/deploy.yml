@@ -30,7 +30,7 @@ jobs:
       - name: Build Angular App
         run: |
           npm install -g @angular/cli
-          ng build
+          npm run build
 
   Docker-Image:
     runs-on: ubuntu-latest
