@@ -29,8 +29,8 @@ jobs:
     steps:
       - name: Build Angular App
         run: |
-        npm install -g @angular/cli
-        ng build
+          npm install -g @angular/cli
+          ng build
 
   Docker-Image:
     runs-on: ubuntu-latest
