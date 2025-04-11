@@ -6,7 +6,7 @@ on:
       - dev
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,7 +23,11 @@ jobs:
 
       - name: Build Angular app
         run: npm run build --prod
-
+#Deploy
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
       - name: Log in to DockerHub
         uses: docker/login-action@v2
         with:
