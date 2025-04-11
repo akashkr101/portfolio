@@ -6,7 +6,7 @@ on:
       - dev
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -24,34 +24,16 @@ jobs:
       - name: Build Angular app
         run: npm run build --prod
 
-      - name: Upload dist folder as artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: angular-dist
-          path: dist/
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Download build artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: angular-dist
-          path: dist/
-
       - name: Log in to DockerHub
         uses: docker/login-action@v2
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build Docker image
-        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/angular-app:latest .
+        run: |
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/angular-app:latest .
 
       - name: Push Docker image to Docker Hub
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/angular-app:latest
+        run: |
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/angular-app:latest
