@@ -6,13 +6,18 @@ on:
 
 jobs:
 #Step-1
-  Install:
-    runs-on: self
+  Checkout:
+    runs-on: self-hosted
     env:
-      IMAGE_NAME: your-dockerhub-username/your-angular-app
+      IMAGE_NAME: akash63/portfolio-v2
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
+#Step-2        
+  Install-Dependencies:
+    runs-on: self-hosted
+    needs: Checkout
+    steps:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -21,31 +26,27 @@ jobs:
         run: npm install
 #Step-2        
   Build:
-    runs-on: self
-    needs: Install
+    runs-on: self-hosted
+    needs: Install-Dependencies
     steps:
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
       - name: Build Angular App
         run: |
           npm install -g @angular/cli
           ng build
 #Step-3
   Docker-Image:
-    runs-on: self
+    runs-on: self-hosted
     needs: Build
-    steps:      
+    steps:
       - name: Log in to Docker Hub
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
       - name: Build Docker Image
         run: docker build -t $IMAGE_NAME:latest .
       - name: Push Docker Image to Docker Hub
-        run: docker push $IMAGE_NAME:latest
+        run: docker push $IMAGE_NAME:latest             
 #Step-4
   Docker-Container:
-    runs-on: self
+    runs-on: self-hosted
     needs: Docker-Image
     steps: 
       - name: Create Container
