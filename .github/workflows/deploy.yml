@@ -6,7 +6,7 @@ on:
       - dev
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -27,13 +27,21 @@ jobs:
       - name: Log in to DockerHub
         uses: docker/login-action@v2
         with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
 
       - name: Build Docker image
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/angular-app:latest .
+
+      - name: Run container for UI test
         run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/angular-app:latest .
+          docker run -d -p 8080:80 --name angular-ui-test ${{ secrets.DOCKER_USERNAME }}/angular-app:latest
+          sleep 10
+          curl --fail http://localhost:8080 || (docker logs angular-ui-test && exit 1)
+
+      - name: Stop and remove test container
+        if: always()
+        run: docker rm -f angular-ui-test
 
       - name: Push Docker image to Docker Hub
-        run: |
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/angular-app:latest
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/angular-app:latest
